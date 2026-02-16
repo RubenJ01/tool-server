@@ -15,7 +15,6 @@ services:
 
   app:
     build: .
-    image: stjudewashere/seonaut:latest
     container_name: "SEOnaut-app"
     restart: always
     depends_on:
