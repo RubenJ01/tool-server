@@ -1,0 +1,33 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: "SEOnaut-db"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=seonaut
+      - MYSQL_USER=seonaut
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - app-network
+
+  app:
+    image: stjudewashere/seonaut:latest
+    container_name: "SEOnaut-app"
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - SEONAUT_DATABASE_SERVER=db
+      - SEONAUT_DATABASE_USER=seonaut
+      - SEONAUT_DATABASE_PASSWORD=${MYSQL_PASSWORD}
+      - SEONAUT_DATABASE_DATABASE=seonaut
+      - SEONAUT_SERVER_URL=${SEONAUT_URL}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
