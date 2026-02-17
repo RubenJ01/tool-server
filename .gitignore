@@ -9,12 +9,13 @@ plausible/event-data/
 osticket/config/
 osticket/mysql-data/
 
-# Ignore the entire DokuWiki config/data dir by default
-dokuwiki/config/
-
-# Allow the actual content pages
+# Dokuwiki Data
+dokuwiki/config/**/*
+!dokuwiki/config/dokuwiki/
+!dokuwiki/config/dokuwiki/data/
 !dokuwiki/config/dokuwiki/data/pages/
 !dokuwiki/config/dokuwiki/data/pages/**
+!dokuwiki/config/dokuwiki/data/media/
+!dokuwiki/config/dokuwiki/data/media/**
 
-# Ignore the playground
-dokuwiki/config/dokuwiki/data/pages/playground/
+
