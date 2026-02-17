@@ -1,0 +1,28 @@
+services:
+  osticket-db:
+    image: mariadb:10.6
+    container_name: osticket-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${OSTICKET_DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${OSTICKET_DB_NAME}
+      MYSQL_USER: ${OSTICKET_DB_USER}
+      MYSQL_PASSWORD: ${OSTICKET_DB_PASSWORD}
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+
+  osticket-app:
+    image: campbellsoftwaresolutions/osticket:latest
+    container_name: osticket-app
+    restart: always
+    ports:
+      - "${OSTICKET_PORT}:80"
+    environment:
+      - MYSQL_HOST=osticket-db
+      - MYSQL_USER=${OSTICKET_DB_USER}
+      - MYSQL_PASSWORD=${OSTICKET_DB_PASSWORD}
+      - MYSQL_DATABASE=${OSTICKET_DB_NAME}
+    depends_on:
+      - osticket-db
+    volumes:
+      - ./config:/var/www/html/include

@@ -4,3 +4,7 @@
 # Plausible Database Data
 plausible/db-data/
 plausible/event-data/
+
+# OSTicker Data
+osticket/config/
+osticket/mysql-data/

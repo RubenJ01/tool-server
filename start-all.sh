@@ -1,5 +1,12 @@
 #!/bin/bash
-ROOT_DIR="$HOME/tool-server"
+ROOT_DIR="/root/tool-server"
+ENV_FILE="$ROOT_DIR/.env"
+
+# 1. Load global variables if .env exists
+if [ -f "$ENV_FILE" ]; then
+    echo "🔑 Loading global environment variables..."
+    export $(grep -v '^#' "$ENV_FILE" | xargs)
+fi
 
 echo "🛑 Cleaning up ghost containers..."
 docker stop $(docker ps -aq) 2>/dev/null
@@ -17,10 +24,14 @@ cd "$ROOT_DIR/seonaut" && docker compose up -d
 echo "📊 Starting Plausible Analytics..."
 cd "$ROOT_DIR/plausible" && docker compose up -d
 
+echo "🎫 Starting osTicket..."
+cd "$ROOT_DIR/osticket" && docker compose up -d
+
 NPM_NAME=$(docker ps --filter "ancestor=jc21/nginx-proxy-manager" --format "{{.Names}}")
 
 echo "🔗 Building Network Bridges..."
-for container in "$NPM_NAME" "plausible_app" "plausible_db" "SEOnaut-app"; do
+# Added osticket-app and osticket-db to your bridge loop
+for container in "$NPM_NAME" "plausible_app" "plausible_db" "SEOnaut-app" "osticket-app" "osticket-db"; do
     docker network connect app-network "$container" 2>/dev/null || true
 done
 
@@ -60,4 +71,11 @@ if docker exec "$NPM_NAME" curl -s -I http://plausible_app:8000 | grep -q "HTTP"
     echo "✅ ANALYTICS: ONLINE (https://analytics.rubenjakob.com)"
 else
     echo "❌ ANALYTICS: OFFLINE"
+fi
+
+# Added health check for osTicket
+if docker exec "$NPM_NAME" curl -s -I http://osticket-app:80 | grep -q "HTTP"; then
+    echo "✅ SUPPORT: ONLINE (https://support.rubenjakob.com)"
+else
+    echo "❌ SUPPORT: OFFLINE"
 fi
