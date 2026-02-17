@@ -27,6 +27,9 @@ cd "$ROOT_DIR/plausible" && docker compose up -d
 echo "🎫 Starting osTicket..."
 cd "$ROOT_DIR/osticket" && docker compose up -d
 
+echo "📝 Starting DokuWiki..."
+cd "$ROOT_DIR/dokuwiki" && docker compose up -d
+
 NPM_NAME=$(docker ps --filter "ancestor=jc21/nginx-proxy-manager" --format "{{.Names}}")
 
 echo "🔗 Building Network Bridges..."
@@ -73,9 +76,14 @@ else
     echo "❌ ANALYTICS: OFFLINE"
 fi
 
-# Added health check for osTicket
 if docker exec "$NPM_NAME" curl -s -I http://osticket-app:80 | grep -q "HTTP"; then
     echo "✅ SUPPORT: ONLINE (https://support.rubenjakob.com)"
 else
     echo "❌ SUPPORT: OFFLINE"
+fi
+
+if docker exec "$NPM_NAME" curl -s -I http://dokuwiki:80 | grep -q "HTTP"; then
+    echo "✅ WIKI: ONLINE (https://wiki.rubenjakob.com)"
+else
+    echo "❌ WIKI: OFFLINE"
 fi
