@@ -1,1 +1,0 @@
-CREATE FUNCTION acquisition_channel_mobile_push_notifications AS (utm_medium, referrer_source) -> (endsWith(utm_medium, 'push') OR multiSearchAny(utm_medium, ['mobile', 'notification']) OR (referrer_source = 'firebase'))

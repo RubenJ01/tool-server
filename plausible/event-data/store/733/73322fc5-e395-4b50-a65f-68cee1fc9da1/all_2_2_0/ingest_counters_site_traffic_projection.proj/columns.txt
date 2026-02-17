@@ -1,5 +1,0 @@
-columns format version: 1
-3 columns:
-`site_id` Nullable(UInt64)
-`toDate(event_timebucket)` Date
-`sumIf(value, equals(metric, 'buffered'))` AggregateFunction(sumIf, UInt64, LowCardinality(UInt8))

@@ -1,2 +1,6 @@
 .env
 **/data/
+
+# Plausible Database Data
+plausible/db-data/
+plausible/event-data/

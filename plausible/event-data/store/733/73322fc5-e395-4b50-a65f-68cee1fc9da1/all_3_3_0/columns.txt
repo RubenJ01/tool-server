@@ -1,8 +1,0 @@
-columns format version: 1
-6 columns:
-`event_timebucket` DateTime
-`domain` LowCardinality(String)
-`site_id` Nullable(UInt64)
-`metric` LowCardinality(String)
-`value` UInt64
-`tracker_script_version` UInt16

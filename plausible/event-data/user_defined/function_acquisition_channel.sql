@@ -1,1 +1,0 @@
-CREATE FUNCTION acquisition_channel AS (referrer_source, utm_medium, utm_campaign, utm_source, click_id_param) -> acquisition_channel_lowered(lower(referrer_source), lower(utm_medium), lower(utm_campaign), lower(utm_source), click_id_param)

@@ -1,3 +1,0 @@
-format version: 1
-create time: 2026-02-16 23:49:54
-commands: DROP COLUMN IF EXISTS active_visitors

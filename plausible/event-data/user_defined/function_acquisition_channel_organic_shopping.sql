@@ -1,1 +1,0 @@
-CREATE FUNCTION acquisition_channel_organic_shopping AS (referrer_source, utm_campaign) -> (acquisition_channel_has_category_shopping(referrer_source) OR acquisition_channel_shopping_campaign(utm_campaign))

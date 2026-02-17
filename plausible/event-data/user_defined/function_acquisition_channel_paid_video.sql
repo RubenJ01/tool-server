@@ -1,1 +1,0 @@
-CREATE FUNCTION acquisition_channel_paid_video AS (referrer_source, utm_medium, utm_source) -> (acquisition_channel_has_category_video(referrer_source) AND (acquisition_channel_paid_medium(utm_medium) OR acquisition_channel_paid_utm_source(utm_source)))
