@@ -1,0 +1,5 @@
+columns format version: 1
+3 columns:
+`type` LowCardinality(String)
+`id` String
+`name` String

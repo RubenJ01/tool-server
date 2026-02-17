@@ -1,0 +1,1 @@
+CREATE FUNCTION acquisition_channel_email AS (referrer_source, utm_source, utm_medium) -> (acquisition_channel_has_category_email(referrer_source) OR acquisition_channel_contains_email(utm_source) OR acquisition_channel_contains_email(utm_medium))

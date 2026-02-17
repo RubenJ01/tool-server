@@ -19,6 +19,7 @@ services:
     restart: always
     depends_on:
       - db
+    entrypoint: ["/app/seonaut"]
     environment:
       - SEONAUT_DATABASE_SERVER=db
       - SEONAUT_DATABASE_USER=seonaut

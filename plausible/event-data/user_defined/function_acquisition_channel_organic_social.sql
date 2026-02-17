@@ -1,0 +1,1 @@
+CREATE FUNCTION acquisition_channel_organic_social AS (referrer_source, utm_medium) -> (acquisition_channel_has_category_social(referrer_source) OR (utm_medium IN ('social', 'social-network', 'social-media', 'sm', 'social network', 'social media')))
