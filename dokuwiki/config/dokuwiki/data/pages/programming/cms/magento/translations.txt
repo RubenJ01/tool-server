@@ -5,3 +5,5 @@ When building a module, you want your texts to be translatable—especially thos
 ===== 1. Implementing Translations =====
 
 ==== Magento 2: Translations (i18n) ====
+
+This is a test.
