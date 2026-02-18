@@ -1,0 +1,7 @@
+====== Magento 2: Translations (i18n) ======
+
+When building a module, you want your texts to be translatable—especially those visible on the frontend. In Magento, a translatable string is called a **Phrase**.
+
+===== 1. Implementing Translations =====
+
+==== Magento 2: Translations (i18n) ====

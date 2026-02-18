@@ -1,0 +1,1 @@
+====== What does bin/magento setup:upgrade do? ======
