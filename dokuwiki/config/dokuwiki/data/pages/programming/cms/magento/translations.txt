@@ -6,4 +6,4 @@ When building a module, you want your texts to be translatable—especially thos
 
 ==== Magento 2: Translations (i18n) ====
 
-This is a test.
+This is a another test.
