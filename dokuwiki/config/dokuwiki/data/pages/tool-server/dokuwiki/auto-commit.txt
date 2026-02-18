@@ -1,0 +1,68 @@
+====== DokuWiki Auto Commit ======
+
+Every **15** minutes a cronjob runs that automatically commits and pushes all changes inside the DokuWiki data folder.
+It only pushes the changes to the pages and media because of a "hacky" fix in the **.gitignore**:
+<code>
+# Dokuwiki Data
+dokuwiki/config/**/*
+!dokuwiki/config/dokuwiki/
+!dokuwiki/config/dokuwiki/data/
+!dokuwiki/config/dokuwiki/data/pages/
+!dokuwiki/config/dokuwiki/data/pages/**
+!dokuwiki/config/dokuwiki/data/media/
+!dokuwiki/config/dokuwiki/data/media/**
+</code>
+
+A simple shell script just commits and pushes the changes with the timestamp attached:
+<code bash>
+#!/bin/bash
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+REPO_DIR="/root/tool-server"
+cd "$REPO_DIR" || exit
+
+git config --global --add safe.directory "$REPO_DIR"
+git pull origin main --quiet
+
+git add dokuwiki/config/dokuwiki/data/
+
+if git diff --cached --quiet; then
+    echo "$(date): No changes."
+else
+    git commit -m "chore: DokuWiki auto-update $(date +'%Y-%m-%d %H:%M')"
+    git push origin main
+    echo "$(date): Pushed."
+fi
+</code>
+
+===== Configuring the cronjob =====
+
+If you run the following command on the root of the tool server:
+<code>
+root@ruben-tool-server:~# crontab -l
+*/15 * * * * /root/tool-server/sync-wiki.sh >> /var/log/wiki-sync.log 2>&1
+root@ruben-tool-server:~#
+</code>
+
+To change the frequency of the cronjob, run the following command (replacing X with your desired number of minutes):
+
+<code>
+echo "*/X * * * * /root/tool-server/sync-wiki.sh >> /var/log/wiki-sync.log 2>&1" | crontab -
+</code>
+
+For example, to change it back to every 5 minutes, you would run:
+
+<code>
+echo "*/5 * * * * /root/tool-server/sync-wiki.sh >> /var/log/wiki-sync.log 2>&1" | crontab -
+</code>
+
+Alternatively, you can edit the configuration manually by running:
+
+<code>
+crontab -e
+</code>
+
+This opens the crontab in a text editor where you can modify the timing string directly. Once you save and exit, the system will automatically apply the new schedule.
+
+
+
